@@ -18,7 +18,7 @@
     },
     {
       "name": "Task Delegation Manager",
-      "id": "69884944b662c978044a15b5",
+      "id": "69887ff26e39fd71f22d73d6",
       "type": "manager",
       "description": "Coordinates email scanning and Slack notification workflow, aggregates delegation results and provides summary of tasks assigned",
       "model": "gpt-4.1",

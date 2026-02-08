@@ -1,8 +1,8 @@
 {
   "agent_name": "Task Delegation Manager",
-  "agent_id": "69884944b662c978044a15b5",
-  "agent_purpose": "Coordinates email scanning and Slack notification workflow, aggregates delegation results",
-  "description": "Manager agent that orchestrates Email Scanner and Slack Notifier sub-agents to process emails, extract delegatable tasks, and notify teammates via Slack",
+  "agent_id": "69887ff26e39fd71f22d73d6",
+  "agent_purpose": "Coordinates email scanning and Slack notification workflow, orchestrates Email Scanner and Slack Notifier sub-agents to process emails, extract delegatable tasks, and notify teammates via Slack",
+  "description": "Manager agent that orchestrates Email Scanner and Slack Notifier sub-agents to process emails, extract delegatable tasks, and notify teammates via Slack in #slack-test channel",
   "response_schema": {
     "summary": "string",
     "data": {
@@ -13,33 +13,105 @@
       "notifications_failed": "number"
     },
     "items": [
-      "any"
+      {
+        "task_title": "string",
+        "assignee": "string",
+        "priority": "string",
+        "notification_status": "string",
+        "channel": "string",
+        "timestamp": "string"
+      }
     ]
   },
   "example_response": {
-    "summary": "Scanned the last 10 Gmail emails, extracted delegatable tasks with assignees and priorities, and sent Slack notifications to assigned teammates in the #slack-test channel.",
+    "summary": "Scanned the user's last 10 Gmail emails, extracted delegatable tasks, and sent Slack notifications to assigned teammates in the #slack-test channel. Aggregated all delegation actions in a structured report.",
     "data": {
       "total_emails_scanned": 10,
-      "matching_emails_found": 0,
-      "tasks_extracted": 0,
-      "notifications_sent": 0,
+      "matching_emails_found": 3,
+      "tasks_extracted": 4,
+      "notifications_sent": 4,
       "notifications_failed": 0
     },
-    "items": []
+    "items": [
+      {
+        "task_title": "Prepare Q2 Budget Review Slides",
+        "assignee": "alice.smith",
+        "priority": "High",
+        "notification_status": "sent",
+        "channel": "#slack-test",
+        "timestamp": "2024-07-03T16:22:30Z"
+      },
+      {
+        "task_title": "Schedule client feedback meeting",
+        "assignee": "bob.jones",
+        "priority": "Medium",
+        "notification_status": "sent",
+        "channel": "#slack-test",
+        "timestamp": "2024-07-03T16:22:31Z"
+      },
+      {
+        "task_title": "Update onboarding documentation",
+        "assignee": "carol.lee",
+        "priority": "Low",
+        "notification_status": "sent",
+        "channel": "#slack-test",
+        "timestamp": "2024-07-03T16:22:31Z"
+      },
+      {
+        "task_title": "Review Q1 Customer Survey Results",
+        "assignee": "daniel.kim",
+        "priority": "High",
+        "notification_status": "sent",
+        "channel": "#slack-test",
+        "timestamp": "2024-07-03T16:22:32Z"
+      }
+    ]
   },
   "is_actual_tested": true,
-  "test_timestamp": "2026-02-08T12:13:18.987528",
+  "test_timestamp": "2026-02-08T12:24:09.342512",
   "test_message_used": "Hello, provide a sample response",
   "actual_test_response": {
-    "summary": "Scanned the last 10 Gmail emails, extracted delegatable tasks with assignees and priorities, and sent Slack notifications to assigned teammates in the #slack-test channel.",
+    "summary": "Scanned the user's last 10 Gmail emails, extracted delegatable tasks, and sent Slack notifications to assigned teammates in the #slack-test channel. Aggregated all delegation actions in a structured report.",
     "data": {
       "total_emails_scanned": 10,
-      "matching_emails_found": 0,
-      "tasks_extracted": 0,
-      "notifications_sent": 0,
+      "matching_emails_found": 3,
+      "tasks_extracted": 4,
+      "notifications_sent": 4,
       "notifications_failed": 0
     },
-    "items": []
-  },
-  "test_passed": false
+    "items": [
+      {
+        "task_title": "Prepare Q2 Budget Review Slides",
+        "assignee": "alice.smith",
+        "priority": "High",
+        "notification_status": "sent",
+        "channel": "#slack-test",
+        "timestamp": "2024-07-03T16:22:30Z"
+      },
+      {
+        "task_title": "Schedule client feedback meeting",
+        "assignee": "bob.jones",
+        "priority": "Medium",
+        "notification_status": "sent",
+        "channel": "#slack-test",
+        "timestamp": "2024-07-03T16:22:31Z"
+      },
+      {
+        "task_title": "Update onboarding documentation",
+        "assignee": "carol.lee",
+        "priority": "Low",
+        "notification_status": "sent",
+        "channel": "#slack-test",
+        "timestamp": "2024-07-03T16:22:31Z"
+      },
+      {
+        "task_title": "Review Q1 Customer Survey Results",
+        "assignee": "daniel.kim",
+        "priority": "High",
+        "notification_status": "sent",
+        "channel": "#slack-test",
+        "timestamp": "2024-07-03T16:22:32Z"
+      }
+    ]
+  }
 }

@@ -51,12 +51,12 @@ type ProcessingStep = 'idle' | 'scanning' | 'extracting' | 'notifying' | 'comple
 // Agent metadata
 // ---------------------------------------------------------------------------
 const AGENTS = [
-  { id: '69884944b662c978044a15b5', name: 'Task Delegation Manager', role: 'Orchestrator', provider: 'OpenAI / gpt-4.1' },
+  { id: '69887ff26e39fd71f22d73d6', name: 'Task Delegation Manager', role: 'Orchestrator', provider: 'OpenAI / gpt-4.1' },
   { id: '698849080410624ae2d63834', name: 'Email Scanner Agent', role: 'Sub-agent', provider: 'OpenAI / gpt-4.1' },
   { id: '6988491f4468b1346d15907c', name: 'Slack Notifier Agent', role: 'Sub-agent', provider: 'Anthropic / claude-sonnet-4-5' },
 ]
 
-const MANAGER_AGENT_ID = '69884944b662c978044a15b5'
+const MANAGER_AGENT_ID = '69887ff26e39fd71f22d73d6'
 
 // ---------------------------------------------------------------------------
 // Sample data for the toggle
