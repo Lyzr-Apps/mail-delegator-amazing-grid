@@ -190,16 +190,36 @@ export default function Home() {
     stepTimers.current = [t1, t2]
 
     try {
-      const result = await callAIAgent(
+      // Add timeout to prevent indefinite hanging (90 second limit)
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 90000)
+
+      const resultPromise = callAIAgent(
         'Process my emails and delegate tasks to my teammates. Look for emails with urgent, team, or delegate keywords and notify the assigned teammates on Slack.',
         MANAGER_AGENT_ID
       )
+
+      const result = await resultPromise
+      clearTimeout(timeoutId)
 
       // Clear step timers
       stepTimers.current.forEach(clearTimeout)
       stepTimers.current = []
 
-      if (result?.success && result?.response?.status === 'success') {
+      // Check for recursion errors from the Lyzr platform
+      const rawResponse = result?.raw_response ?? ''
+      const responseMessage = result?.response?.message ?? ''
+      const isRecursionError =
+        rawResponse.toLowerCase().includes('recursion') ||
+        rawResponse.toLowerCase().includes('aborting') ||
+        responseMessage.toLowerCase().includes('recursion') ||
+        responseMessage.toLowerCase().includes('aborting')
+
+      if (isRecursionError) {
+        setErrorMsg(
+          'The manager agent encountered a recursion loop on the server. This typically happens when the Gmail or Slack integrations are not yet authorized via Composio OAuth. Please ensure both Gmail and Slack connections are configured, then try again.'
+        )
+      } else if (result?.success && result?.response?.status === 'success') {
         const agentResult = result?.response?.result as DelegationResult | string | undefined
 
         if (typeof agentResult === 'object' && agentResult !== null) {
@@ -222,22 +242,40 @@ export default function Home() {
             ...prev,
           ])
         } else if (typeof agentResult === 'string') {
-          setSummary(agentResult)
-          setHistory(prev => [
-            { timestamp: new Date().toISOString(), summary: agentResult, stats: null, items: [] },
-            ...prev,
-          ])
+          // Check if the string response itself mentions recursion
+          if (agentResult.toLowerCase().includes('recursion') || agentResult.toLowerCase().includes('aborting')) {
+            setErrorMsg(
+              'The manager agent encountered a recursion loop. This usually means the Gmail/Slack integrations need OAuth authorization via Composio. Please configure the connections and try again.'
+            )
+          } else {
+            setSummary(agentResult)
+            setHistory(prev => [
+              { timestamp: new Date().toISOString(), summary: agentResult, stats: null, items: [] },
+              ...prev,
+            ])
+          }
         } else {
           const msg = result?.response?.message ?? 'Processing complete.'
           setSummary(msg)
         }
       } else {
         const errText = result?.response?.message ?? result?.error ?? 'An error occurred while processing emails.'
-        setErrorMsg(errText)
+        // Provide a better message if it's a recursion issue
+        if (errText.toLowerCase().includes('recursion') || errText.toLowerCase().includes('aborting')) {
+          setErrorMsg(
+            'The manager agent encountered a recursion loop on the server. This typically happens when the Gmail or Slack integrations are not yet authorized via Composio OAuth. Please ensure both Gmail and Slack connections are configured, then try again.'
+          )
+        } else {
+          setErrorMsg(errText)
+        }
       }
     } catch (err) {
       stepTimers.current.forEach(clearTimeout)
-      setErrorMsg('Network error. Please try again.')
+      if (err instanceof DOMException && err.name === 'AbortError') {
+        setErrorMsg('Request timed out after 90 seconds. The agent may be stuck. Please try again.')
+      } else {
+        setErrorMsg('Network error. Please try again.')
+      }
     }
 
     setProcessingStep('complete')

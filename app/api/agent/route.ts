@@ -24,7 +24,16 @@ function generateUUID(): string {
   })
 }
 
-function normalizeResponse(parsed: any): NormalizedAgentResponse {
+function normalizeResponse(parsed: any, depth = 0): NormalizedAgentResponse {
+  // Guard against infinite recursion (max 3 levels deep)
+  if (depth > 3) {
+    return {
+      status: 'success',
+      result: typeof parsed === 'object' && parsed !== null ? parsed : { value: parsed },
+      message: typeof parsed === 'string' ? parsed : undefined,
+    }
+  }
+
   if (!parsed) {
     return {
       status: 'error',
@@ -34,6 +43,14 @@ function normalizeResponse(parsed: any): NormalizedAgentResponse {
   }
 
   if (typeof parsed === 'string') {
+    // Detect Lyzr platform recursion error messages
+    if (parsed.toLowerCase().includes('recursion') || parsed.toLowerCase().includes('stuck in recursion')) {
+      return {
+        status: 'error',
+        result: { text: parsed },
+        message: parsed,
+      }
+    }
     return {
       status: 'success',
       result: { text: parsed },
@@ -86,7 +103,7 @@ function normalizeResponse(parsed: any): NormalizedAgentResponse {
   }
 
   if ('response' in parsed) {
-    return normalizeResponse(parsed.response)
+    return normalizeResponse(parsed.response, depth + 1)
   }
 
   return {
@@ -146,6 +163,10 @@ export async function POST(request: NextRequest) {
       payload.assets = assets
     }
 
+    // Add timeout to prevent Lyzr API from hanging (120 seconds max)
+    const abortController = new AbortController()
+    const apiTimeout = setTimeout(() => abortController.abort(), 120000)
+
     const response = await fetch(LYZR_API_URL, {
       method: 'POST',
       headers: {
@@ -153,7 +174,10 @@ export async function POST(request: NextRequest) {
         'x-api-key': LYZR_API_KEY,
       },
       body: JSON.stringify(payload),
+      signal: abortController.signal,
     })
+
+    clearTimeout(apiTimeout)
 
     const rawText = await response.text()
 
@@ -206,7 +230,11 @@ export async function POST(request: NextRequest) {
       )
     }
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : 'Server error'
+    // Detect AbortError from timeout
+    const isTimeout = error instanceof Error && error.name === 'AbortError'
+    const errorMsg = isTimeout
+      ? 'Agent request timed out after 120 seconds. The agent may be stuck in a recursion loop. Please check that Gmail and Slack integrations are properly connected.'
+      : error instanceof Error ? error.message : 'Server error'
     return NextResponse.json(
       {
         success: false,
@@ -217,7 +245,7 @@ export async function POST(request: NextRequest) {
         },
         error: errorMsg,
       },
-      { status: 500 }
+      { status: isTimeout ? 504 : 500 }
     )
   }
 }
