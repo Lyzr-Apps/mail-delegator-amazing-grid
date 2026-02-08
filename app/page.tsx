@@ -218,8 +218,22 @@ export default function Home() {
         setErrorMsg(
           'The manager agent encountered a recursion loop on the server. This typically happens when the Gmail or Slack integrations are not yet authorized via Composio OAuth. Please ensure both Gmail and Slack connections are configured, then try again.'
         )
-      } else if (result?.success && result?.response?.status === 'success') {
-        const agentResult = result?.response?.result as DelegationResult | string | undefined
+      } else if (result?.success) {
+        // The Manager may return the result in two formats:
+        // 1. Wrapped: { status: "success", result: { summary, data, items } }
+        // 2. Unwrapped: the response itself is { summary, data, items }
+        const wrapped = result?.response?.result as DelegationResult | string | undefined
+        const unwrapped = result?.response as DelegationResult | undefined
+
+        // Determine the actual result object
+        let agentResult: DelegationResult | string | undefined = undefined
+        if (typeof wrapped === 'object' && wrapped !== null && (wrapped.summary || wrapped.data || wrapped.items)) {
+          agentResult = wrapped
+        } else if (typeof wrapped === 'string') {
+          agentResult = wrapped
+        } else if (typeof unwrapped === 'object' && unwrapped !== null && (unwrapped.summary || unwrapped.data || unwrapped.items)) {
+          agentResult = unwrapped
+        }
 
         if (typeof agentResult === 'object' && agentResult !== null) {
           if (agentResult?.data) {
@@ -235,7 +249,7 @@ export default function Home() {
             {
               timestamp: new Date().toISOString(),
               summary: summaryText,
-              stats: agentResult?.data ?? null,
+              stats: agentResult && typeof agentResult === 'object' ? (agentResult as DelegationResult)?.data ?? null : null,
               items,
             },
             ...prev,
@@ -249,7 +263,7 @@ export default function Home() {
           } else {
             setSummary(agentResult)
             setHistory(prev => [
-              { timestamp: new Date().toISOString(), summary: agentResult, stats: null, items: [] },
+              { timestamp: new Date().toISOString(), summary: agentResult as string, stats: null, items: [] },
               ...prev,
             ])
           }
@@ -578,8 +592,14 @@ export default function Home() {
                 {!Array.isArray(displayDelegations) || displayDelegations.length === 0 ? (
                   <div className="text-center py-12">
                     <Inbox className="w-10 h-10 text-muted-foreground/40 mx-auto mb-3" />
-                    <p className="text-sm font-medium text-muted-foreground">No delegations yet</p>
-                    <p className="text-xs text-muted-foreground mt-1">Click Process Emails to scan your inbox and delegate tasks.</p>
+                    <p className="text-sm font-medium text-muted-foreground">
+                      {stats && stats.total_emails_scanned > 0 ? 'No delegatable tasks found' : 'No delegations yet'}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {stats && stats.total_emails_scanned > 0
+                        ? `Scanned ${stats.total_emails_scanned} emails but no tasks were identified for delegation.`
+                        : 'Click Process Emails to scan your last 10 emails and delegate tasks.'}
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-2">

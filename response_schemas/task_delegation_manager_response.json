@@ -4,215 +4,42 @@
   "agent_purpose": "Coordinates email scanning and Slack notification workflow, aggregates delegation results",
   "description": "Manager agent that orchestrates Email Scanner and Slack Notifier sub-agents to process emails, extract delegatable tasks, and notify teammates via Slack",
   "response_schema": {
-    "status": "string",
-    "result": {
-      "summary": "string",
-      "data": {
-        "total_emails_scanned": "number",
-        "matching_emails_found": "number",
-        "tasks_extracted": "number",
-        "notifications_sent": "number",
-        "notifications_failed": "number"
-      },
-      "items": [
-        {
-          "task_title": "string",
-          "assignee": "string",
-          "priority": "string",
-          "notification_status": "string",
-          "channel": "string",
-          "timestamp": "string"
-        }
-      ]
+    "summary": "string",
+    "data": {
+      "total_emails_scanned": "number",
+      "matching_emails_found": "number",
+      "tasks_extracted": "number",
+      "notifications_sent": "number",
+      "notifications_failed": "number"
     },
-    "metadata": {
-      "agent_name": "string",
-      "timestamp": "string"
-    }
+    "items": [
+      "any"
+    ]
   },
   "example_response": {
-    "status": "success",
-    "result": {
-      "summary": "Delegation workflow completed. The last 10 emails were scanned. 5 emails contained delegatable tasks. A total of 5 tasks were extracted and processed. 4 notifications were successfully sent to #slack-test via Slack, and 1 notification failed to send. All assignments are summarized below with their respective details.",
-      "data": {
-        "total_emails_scanned": 10,
-        "matching_emails_found": 5,
-        "tasks_extracted": 5,
-        "notifications_sent": 4,
-        "notifications_failed": 1
-      },
-      "items": [
-        {
-          "task_title": "Prepare Q2 Financial Summary",
-          "assignee": "jane.smith",
-          "priority": "High",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:22:10Z"
-        },
-        {
-          "task_title": "Update Product Roadmap",
-          "assignee": "tom.lee",
-          "priority": "Medium",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:23:05Z"
-        },
-        {
-          "task_title": "Organize Marketing Meeting",
-          "assignee": "emma.thompson",
-          "priority": "High",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:24:18Z"
-        },
-        {
-          "task_title": "Refresh Website Banner",
-          "assignee": "sara.kim",
-          "priority": "Low",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:25:02Z"
-        },
-        {
-          "task_title": "Schedule Customer Demos",
-          "assignee": "mike.jordan",
-          "priority": "Medium",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:25:32Z"
-        },
-        {
-          "task_title": "Update Security Policies",
-          "assignee": "lucas.perez",
-          "priority": "High",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:26:11Z"
-        },
-        {
-          "task_title": "Onboard New Interns",
-          "assignee": "anna.brown",
-          "priority": "Medium",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:27:04Z"
-        },
-        {
-          "task_title": "Compile Audit Documents",
-          "assignee": "victor.wang",
-          "priority": "High",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:27:40Z"
-        },
-        {
-          "task_title": "Review Partner Contracts",
-          "assignee": "linda.zhao",
-          "priority": "Medium",
-          "notification_status": "failed",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:28:35Z"
-        }
-      ]
+    "summary": "Scanned the last 10 Gmail emails, extracted delegatable tasks with assignees and priorities, and sent Slack notifications to assigned teammates in the #slack-test channel.",
+    "data": {
+      "total_emails_scanned": 10,
+      "matching_emails_found": 0,
+      "tasks_extracted": 0,
+      "notifications_sent": 0,
+      "notifications_failed": 0
     },
-    "metadata": {
-      "agent_name": "Task Delegation Manager",
-      "timestamp": "2024-06-13T09:30:00Z"
-    }
+    "items": []
   },
   "is_actual_tested": true,
-  "test_timestamp": "2026-02-08T08:30:19.481149",
+  "test_timestamp": "2026-02-08T12:13:18.987528",
   "test_message_used": "Hello, provide a sample response",
   "actual_test_response": {
-    "status": "success",
-    "result": {
-      "summary": "Delegation workflow completed. The last 10 emails were scanned. 5 emails contained delegatable tasks. A total of 5 tasks were extracted and processed. 4 notifications were successfully sent to #slack-test via Slack, and 1 notification failed to send. All assignments are summarized below with their respective details.",
-      "data": {
-        "total_emails_scanned": 10,
-        "matching_emails_found": 5,
-        "tasks_extracted": 5,
-        "notifications_sent": 4,
-        "notifications_failed": 1
-      },
-      "items": [
-        {
-          "task_title": "Prepare Q2 Financial Summary",
-          "assignee": "jane.smith",
-          "priority": "High",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:22:10Z"
-        },
-        {
-          "task_title": "Update Product Roadmap",
-          "assignee": "tom.lee",
-          "priority": "Medium",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:23:05Z"
-        },
-        {
-          "task_title": "Organize Marketing Meeting",
-          "assignee": "emma.thompson",
-          "priority": "High",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:24:18Z"
-        },
-        {
-          "task_title": "Refresh Website Banner",
-          "assignee": "sara.kim",
-          "priority": "Low",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:25:02Z"
-        },
-        {
-          "task_title": "Schedule Customer Demos",
-          "assignee": "mike.jordan",
-          "priority": "Medium",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:25:32Z"
-        },
-        {
-          "task_title": "Update Security Policies",
-          "assignee": "lucas.perez",
-          "priority": "High",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:26:11Z"
-        },
-        {
-          "task_title": "Onboard New Interns",
-          "assignee": "anna.brown",
-          "priority": "Medium",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:27:04Z"
-        },
-        {
-          "task_title": "Compile Audit Documents",
-          "assignee": "victor.wang",
-          "priority": "High",
-          "notification_status": "sent",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:27:40Z"
-        },
-        {
-          "task_title": "Review Partner Contracts",
-          "assignee": "linda.zhao",
-          "priority": "Medium",
-          "notification_status": "failed",
-          "channel": "#slack-test",
-          "timestamp": "2024-06-13T09:28:35Z"
-        }
-      ]
+    "summary": "Scanned the last 10 Gmail emails, extracted delegatable tasks with assignees and priorities, and sent Slack notifications to assigned teammates in the #slack-test channel.",
+    "data": {
+      "total_emails_scanned": 10,
+      "matching_emails_found": 0,
+      "tasks_extracted": 0,
+      "notifications_sent": 0,
+      "notifications_failed": 0
     },
-    "metadata": {
-      "agent_name": "Task Delegation Manager",
-      "timestamp": "2024-06-13T09:30:00Z"
-    }
-  }
+    "items": []
+  },
+  "test_passed": false
 }
