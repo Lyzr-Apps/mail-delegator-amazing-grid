@@ -70,14 +70,14 @@ const SAMPLE_STATS: DelegationStats = {
 }
 
 const SAMPLE_ITEMS: DelegationItem[] = [
-  { task_title: 'Prepare Q2 Financial Summary', assignee: 'jane.smith', priority: 'High', notification_status: 'sent', channel: '#finance-team', timestamp: '2024-06-13T09:22:10Z' },
-  { task_title: 'Update Product Roadmap', assignee: 'tom.lee', priority: 'Medium', notification_status: 'sent', channel: '#product', timestamp: '2024-06-13T09:23:05Z' },
-  { task_title: 'Organize Marketing Meeting', assignee: 'emma.thompson', priority: 'High', notification_status: 'sent', channel: '#marketing', timestamp: '2024-06-13T09:24:18Z' },
-  { task_title: 'Refresh Website Banner', assignee: 'sara.kim', priority: 'Low', notification_status: 'sent', channel: '#web-team', timestamp: '2024-06-13T09:25:02Z' },
-  { task_title: 'Review Partner Contracts', assignee: 'linda.zhao', priority: 'Medium', notification_status: 'failed', channel: '#legal', timestamp: '2024-06-13T09:28:35Z' },
+  { task_title: 'Prepare Q2 Financial Summary', assignee: 'jane.smith', priority: 'High', notification_status: 'sent', channel: '#slack-test', timestamp: '2024-06-13T09:22:10Z' },
+  { task_title: 'Update Product Roadmap', assignee: 'tom.lee', priority: 'Medium', notification_status: 'sent', channel: '#slack-test', timestamp: '2024-06-13T09:23:05Z' },
+  { task_title: 'Organize Marketing Meeting', assignee: 'emma.thompson', priority: 'High', notification_status: 'sent', channel: '#slack-test', timestamp: '2024-06-13T09:24:18Z' },
+  { task_title: 'Refresh Website Banner', assignee: 'sara.kim', priority: 'Low', notification_status: 'sent', channel: '#slack-test', timestamp: '2024-06-13T09:25:02Z' },
+  { task_title: 'Review Partner Contracts', assignee: 'linda.zhao', priority: 'Medium', notification_status: 'failed', channel: '#slack-test', timestamp: '2024-06-13T09:28:35Z' },
 ]
 
-const SAMPLE_SUMMARY = 'Delegation workflow completed. 50 emails were scanned. 7 matching delegation emails found. A total of 9 tasks were extracted and processed. 8 notifications were successfully sent via Slack, and 1 notification failed to send.'
+const SAMPLE_SUMMARY = 'Delegation workflow completed. 50 emails were scanned. 7 matching delegation emails found. A total of 9 tasks were extracted and processed. 8 notifications were successfully sent to #slack-test via Slack, and 1 notification failed to send.'
 
 // ---------------------------------------------------------------------------
 // Helper: priority badge styling
@@ -195,7 +195,7 @@ export default function Home() {
       const timeoutId = setTimeout(() => controller.abort(), 90000)
 
       const resultPromise = callAIAgent(
-        'Process my emails and delegate tasks to my teammates. Look for emails with urgent, team, or delegate keywords and notify the assigned teammates on Slack.',
+        'Process my emails and delegate tasks to my teammates. Look for emails with urgent, team, or delegate keywords and notify the assigned teammates on Slack in the #slack-test channel.',
         MANAGER_AGENT_ID
       )
 
@@ -294,7 +294,7 @@ export default function Home() {
     setActiveAgentId(MANAGER_AGENT_ID)
     try {
       const result = await callAIAgent(
-        `Retry sending Slack notification for the task "${item.task_title}" assigned to ${item.assignee} in channel ${item.channel}.`,
+        `Retry sending Slack notification for the task "${item.task_title}" assigned to ${item.assignee} in channel #slack-test.`,
         MANAGER_AGENT_ID
       )
       if (result?.success) {
@@ -462,7 +462,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="space-y-2">
                     <h3 className="text-base font-semibold">Process Emails</h3>
-                    <p className="text-sm text-muted-foreground">Scan your Gmail inbox for delegation-relevant emails, extract tasks, and notify teammates via Slack.</p>
+                    <p className="text-sm text-muted-foreground">Scan your Gmail inbox for delegation-relevant emails, extract tasks, and notify teammates via Slack in #slack-test.</p>
                     <div className="flex flex-wrap gap-1.5 pt-1">
                       {keywords.map(kw => (
                         <Badge key={kw} variant="outline" className="text-xs font-normal">

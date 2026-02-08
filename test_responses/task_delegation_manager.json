@@ -20,7 +20,7 @@
             "assignee": "jane.smith",
             "priority": "High",
             "notification_status": "sent",
-            "channel": "#finance-team",
+            "channel": "#slack-test",
             "timestamp": "2024-06-13T09:22:10Z"
           },
           {
@@ -28,7 +28,7 @@
             "assignee": "tom.lee",
             "priority": "Medium",
             "notification_status": "sent",
-            "channel": "#product",
+            "channel": "#slack-test",
             "timestamp": "2024-06-13T09:23:05Z"
           },
           {
@@ -36,7 +36,7 @@
             "assignee": "emma.thompson",
             "priority": "High",
             "notification_status": "sent",
-            "channel": "#marketing",
+            "channel": "#slack-test",
             "timestamp": "2024-06-13T09:24:18Z"
           },
           {
@@ -44,7 +44,7 @@
             "assignee": "sara.kim",
             "priority": "Low",
             "notification_status": "sent",
-            "channel": "#web-team",
+            "channel": "#slack-test",
             "timestamp": "2024-06-13T09:25:02Z"
           },
           {
@@ -52,7 +52,7 @@
             "assignee": "mike.jordan",
             "priority": "Medium",
             "notification_status": "sent",
-            "channel": "#sales",
+            "channel": "#slack-test",
             "timestamp": "2024-06-13T09:25:32Z"
           },
           {
@@ -60,7 +60,7 @@
             "assignee": "lucas.perez",
             "priority": "High",
             "notification_status": "sent",
-            "channel": "#it-security",
+            "channel": "#slack-test",
             "timestamp": "2024-06-13T09:26:11Z"
           },
           {
@@ -68,7 +68,7 @@
             "assignee": "anna.brown",
             "priority": "Medium",
             "notification_status": "sent",
-            "channel": "#hr",
+            "channel": "#slack-test",
             "timestamp": "2024-06-13T09:27:04Z"
           },
           {
@@ -76,7 +76,7 @@
             "assignee": "victor.wang",
             "priority": "High",
             "notification_status": "sent",
-            "channel": "#compliance",
+            "channel": "#slack-test",
             "timestamp": "2024-06-13T09:27:40Z"
           },
           {
@@ -84,7 +84,7 @@
             "assignee": "linda.zhao",
             "priority": "Medium",
             "notification_status": "failed",
-            "channel": "#legal",
+            "channel": "#slack-test",
             "timestamp": "2024-06-13T09:28:35Z"
           }
         ]
