@@ -6,12 +6,12 @@
     "response": {
       "status": "success",
       "result": {
-        "summary": "Delegation workflow completed. 50 emails were scanned. 7 matching delegation emails found. A total of 9 tasks were extracted and processed. 8 notifications were successfully sent via Slack, and 1 notification failed to send.",
+        "summary": "Delegation workflow completed. The last 10 emails were scanned. 5 emails contained delegatable tasks. A total of 5 tasks were extracted and processed. 4 notifications were successfully sent via Slack, and 1 notification failed to send.",
         "data": {
-          "total_emails_scanned": 50,
-          "matching_emails_found": 7,
-          "tasks_extracted": 9,
-          "notifications_sent": 8,
+          "total_emails_scanned": 10,
+          "matching_emails_found": 5,
+          "tasks_extracted": 5,
+          "notifications_sent": 4,
           "notifications_failed": 1
         },
         "items": [

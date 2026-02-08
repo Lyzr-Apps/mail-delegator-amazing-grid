@@ -9,7 +9,7 @@ import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Loader2, Mail, Send, Check, AlertCircle, ChevronDown, ChevronUp, ChevronRight, RefreshCw, Settings, Search, Menu, X, Play, Activity, Info, Inbox, Users, Zap, ExternalLink } from 'lucide-react'
+import { Loader2, Mail, Send, Check, AlertCircle, ChevronDown, ChevronUp, ChevronRight, RefreshCw, Settings, Menu, X, Play, Activity, Info, Inbox, Users, Zap, ExternalLink } from 'lucide-react'
 
 // ---------------------------------------------------------------------------
 // TypeScript Interfaces (from real test data)
@@ -62,10 +62,10 @@ const MANAGER_AGENT_ID = '69884944b662c978044a15b5'
 // Sample data for the toggle
 // ---------------------------------------------------------------------------
 const SAMPLE_STATS: DelegationStats = {
-  total_emails_scanned: 50,
-  matching_emails_found: 7,
-  tasks_extracted: 9,
-  notifications_sent: 8,
+  total_emails_scanned: 10,
+  matching_emails_found: 5,
+  tasks_extracted: 5,
+  notifications_sent: 4,
   notifications_failed: 1,
 }
 
@@ -77,7 +77,7 @@ const SAMPLE_ITEMS: DelegationItem[] = [
   { task_title: 'Review Partner Contracts', assignee: 'linda.zhao', priority: 'Medium', notification_status: 'failed', channel: '#slack-test', timestamp: '2024-06-13T09:28:35Z' },
 ]
 
-const SAMPLE_SUMMARY = 'Delegation workflow completed. 50 emails were scanned. 7 matching delegation emails found. A total of 9 tasks were extracted and processed. 8 notifications were successfully sent to #slack-test via Slack, and 1 notification failed to send.'
+const SAMPLE_SUMMARY = 'Delegation workflow completed. The last 10 emails were scanned. 5 emails contained delegatable tasks. A total of 5 tasks were extracted and processed. 4 notifications were successfully sent to #slack-test via Slack, and 1 notification failed to send.'
 
 // ---------------------------------------------------------------------------
 // Helper: priority badge styling
@@ -124,7 +124,7 @@ function formatDateTime(ts: string): string {
 // ---------------------------------------------------------------------------
 const STEP_LABELS: Record<ProcessingStep, string> = {
   idle: '',
-  scanning: 'Scanning Gmail inbox...',
+  scanning: 'Scanning last 10 emails...',
   extracting: 'Extracting task details...',
   notifying: 'Sending Slack notifications...',
   complete: 'Complete!',
@@ -152,7 +152,6 @@ export default function Home() {
   const [errorMsg, setErrorMsg] = useState('')
   const [history, setHistory] = useState<HistoryEntry[]>([])
   const [expandedRow, setExpandedRow] = useState<number | null>(null)
-  const [keywords] = useState<string[]>(['urgent', 'team', 'delegate'])
 
   // Refs for step progression
   const stepTimers = useRef<ReturnType<typeof setTimeout>[]>([])
@@ -195,7 +194,7 @@ export default function Home() {
       const timeoutId = setTimeout(() => controller.abort(), 90000)
 
       const resultPromise = callAIAgent(
-        'Process my emails and delegate tasks to my teammates. Look for emails with urgent, team, or delegate keywords and notify the assigned teammates on Slack in the #slack-test channel.',
+        'Scan my last 10 emails and delegate any tasks found to my teammates. Notify the assigned teammates on Slack in the #slack-test channel.',
         MANAGER_AGENT_ID
       )
 
@@ -345,19 +344,6 @@ export default function Home() {
             </button>
           </nav>
 
-          <Separator />
-
-          {/* Active keywords */}
-          <div className="p-4">
-            <p className="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wide">Active Keywords</p>
-            <div className="flex flex-wrap gap-1.5">
-              {keywords.map(kw => (
-                <Badge key={kw} variant="secondary" className="text-xs font-normal">
-                  {kw}
-                </Badge>
-              ))}
-            </div>
-          </div>
         </div>
       </aside>
 
@@ -409,7 +395,7 @@ export default function Home() {
                     </div>
                   </div>
                   <p className="text-2xl font-bold">{displayStats?.total_emails_scanned ?? 0}</p>
-                  <p className="text-xs text-muted-foreground mt-1">{displayStats?.matching_emails_found ?? 0} matching found</p>
+                  <p className="text-xs text-muted-foreground mt-1">{displayStats?.matching_emails_found ?? 0} with tasks</p>
                 </CardContent>
               </Card>
 
@@ -462,15 +448,7 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="space-y-2">
                     <h3 className="text-base font-semibold">Process Emails</h3>
-                    <p className="text-sm text-muted-foreground">Scan your Gmail inbox for delegation-relevant emails, extract tasks, and notify teammates via Slack in #slack-test.</p>
-                    <div className="flex flex-wrap gap-1.5 pt-1">
-                      {keywords.map(kw => (
-                        <Badge key={kw} variant="outline" className="text-xs font-normal">
-                          <Search className="w-3 h-3 mr-1" />
-                          {kw}
-                        </Badge>
-                      ))}
-                    </div>
+                    <p className="text-sm text-muted-foreground">Scan your last 10 Gmail emails, extract delegatable tasks, and notify teammates via Slack in #slack-test.</p>
                   </div>
                   <Button
                     size="lg"
@@ -524,7 +502,7 @@ export default function Home() {
                               {isDone && !isCurrent ? <Check className="w-3 h-3" /> : i + 1}
                             </div>
                             <span className={`text-xs hidden sm:block whitespace-nowrap ${isDone ? 'text-foreground font-medium' : 'text-muted-foreground'}`}>
-                              {step === 'scanning' && 'Scanning Gmail'}
+                              {step === 'scanning' && 'Scanning Emails'}
                               {step === 'extracting' && 'Extracting Tasks'}
                               {step === 'notifying' && 'Notifying Team'}
                               {step === 'complete' && 'Complete'}
