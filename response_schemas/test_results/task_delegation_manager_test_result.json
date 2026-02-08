@@ -1,0 +1,15 @@
+{
+  "agent_name": "Task Delegation Manager",
+  "agent_id": "69884944b662c978044a15b5",
+  "test_message": "Process my emails and delegate tasks to my teammates. Look for emails with urgent, team, or delegate keywords and notify the assigned teammates on Slack.",
+  "expected_purpose": "Coordinates email scanning and Slack notification workflow, aggregates delegation results",
+  "timestamp": "2026-02-08T08:30:02.560953",
+  "is_valid_json": false,
+  "validation_errors": [
+    "Response is not valid JSON: Expecting value: line 1 column 1 (char 0)"
+  ],
+  "actual_response": {
+    "raw_text": "I'm currently unable to directly access or scan your Gmail inbox due to the available tool limitations. If you can provide your recent emails (as text, CSV, or JSON), I can analyze them for tasks and delegate accordingly. Would you like to upload your email data, or do you need help setting up automation to extract emails for this workflow?"
+  },
+  "raw_response": "I'm currently unable to directly access or scan your Gmail inbox due to the available tool limitations. If you can provide your recent emails (as text, CSV, or JSON), I can analyze them for tasks and delegate accordingly. Would you like to upload your email data, or do you need help setting up automation to extract emails for this workflow?"
+}

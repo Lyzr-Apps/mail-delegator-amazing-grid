@@ -1,0 +1,28 @@
+{
+  "agents": [
+    {
+      "name": "Email Scanner Agent",
+      "id": "698849080410624ae2d63834",
+      "type": "sub-agent",
+      "description": "Scans Gmail for emails containing delegation keywords (urgent, team, delegate), extracts task title, description, priority, context, and parses teammate assignments from @mentions",
+      "model": "gpt-4.1",
+      "provider": "OpenAI"
+    },
+    {
+      "name": "Slack Notifier Agent",
+      "id": "6988491f4468b1346d15907c",
+      "type": "sub-agent",
+      "description": "Composes and sends personalized Slack messages to designated teammates with complete task details including title, description, priority level, and background context",
+      "model": "claude-sonnet-4-5",
+      "provider": "Anthropic"
+    },
+    {
+      "name": "Task Delegation Manager",
+      "id": "69884944b662c978044a15b5",
+      "type": "manager",
+      "description": "Coordinates email scanning and Slack notification workflow, aggregates delegation results and provides summary of tasks assigned",
+      "model": "gpt-4.1",
+      "provider": "OpenAI"
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "agent_name": "Task Delegation Manager",
+  "agent_id": "69884944b662c978044a15b5",
+  "agent_purpose": "Coordinates email scanning and Slack notification workflow, aggregates delegation results",
+  "description": "Manager agent that orchestrates Email Scanner and Slack Notifier sub-agents to process emails, extract delegatable tasks, and notify teammates via Slack",
+  "response_schema": {
+    "status": "string",
+    "result": {
+      "summary": "string",
+      "data": {
+        "total_emails_scanned": "number",
+        "matching_emails_found": "number",
+        "tasks_extracted": "number",
+        "notifications_sent": "number",
+        "notifications_failed": "number"
+      },
+      "items": [
+        {
+          "task_title": "string",
+          "assignee": "string",
+          "priority": "string",
+          "notification_status": "string",
+          "channel": "string",
+          "timestamp": "string"
+        }
+      ]
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "summary": "Delegation workflow completed. 50 emails were scanned. 7 matching delegation emails found. A total of 9 tasks were extracted and processed. 8 notifications were successfully sent via Slack, and 1 notification failed to send. All assignments are summarized below with their respective details.",
+      "data": {
+        "total_emails_scanned": 50,
+        "matching_emails_found": 7,
+        "tasks_extracted": 9,
+        "notifications_sent": 8,
+        "notifications_failed": 1
+      },
+      "items": [
+        {
+          "task_title": "Prepare Q2 Financial Summary",
+          "assignee": "jane.smith",
+          "priority": "High",
+          "notification_status": "sent",
+          "channel": "#finance-team",
+          "timestamp": "2024-06-13T09:22:10Z"
+        },
+        {
+          "task_title": "Update Product Roadmap",
+          "assignee": "tom.lee",
+          "priority": "Medium",
+          "notification_status": "sent",
+          "channel": "#product",
+          "timestamp": "2024-06-13T09:23:05Z"
+        },
+        {
+          "task_title": "Organize Marketing Meeting",
+          "assignee": "emma.thompson",
+          "priority": "High",
+          "notification_status": "sent",
+          "channel": "#marketing",
+          "timestamp": "2024-06-13T09:24:18Z"
+        },
+        {
+          "task_title": "Refresh Website Banner",
+          "assignee": "sara.kim",
+          "priority": "Low",
+          "notification_status": "sent",
+          "channel": "#web-team",
+          "timestamp": "2024-06-13T09:25:02Z"
+        },
+        {
+          "task_title": "Schedule Customer Demos",
+          "assignee": "mike.jordan",
+          "priority": "Medium",
+          "notification_status": "sent",
+          "channel": "#sales",
+          "timestamp": "2024-06-13T09:25:32Z"
+        },
+        {
+          "task_title": "Update Security Policies",
+          "assignee": "lucas.perez",
+          "priority": "High",
+          "notification_status": "sent",
+          "channel": "#it-security",
+          "timestamp": "2024-06-13T09:26:11Z"
+        },
+        {
+          "task_title": "Onboard New Interns",
+          "assignee": "anna.brown",
+          "priority": "Medium",
+          "notification_status": "sent",
+          "channel": "#hr",
+          "timestamp": "2024-06-13T09:27:04Z"
+        },
+        {
+          "task_title": "Compile Audit Documents",
+          "assignee": "victor.wang",
+          "priority": "High",
+          "notification_status": "sent",
+          "channel": "#compliance",
+          "timestamp": "2024-06-13T09:27:40Z"
+        },
+        {
+          "task_title": "Review Partner Contracts",
+          "assignee": "linda.zhao",
+          "priority": "Medium",
+          "notification_status": "failed",
+          "channel": "#legal",
+          "timestamp": "2024-06-13T09:28:35Z"
+        }
+      ]
+    },
+    "metadata": {
+      "agent_name": "Task Delegation Manager",
+      "timestamp": "2024-06-13T09:30:00Z"
+    }
+  },
+  "is_actual_tested": true,
+  "test_timestamp": "2026-02-08T08:30:19.481149",
+  "test_message_used": "Hello, provide a sample response",
+  "actual_test_response": {
+    "status": "success",
+    "result": {
+      "summary": "Delegation workflow completed. 50 emails were scanned. 7 matching delegation emails found. A total of 9 tasks were extracted and processed. 8 notifications were successfully sent via Slack, and 1 notification failed to send. All assignments are summarized below with their respective details.",
+      "data": {
+        "total_emails_scanned": 50,
+        "matching_emails_found": 7,
+        "tasks_extracted": 9,
+        "notifications_sent": 8,
+        "notifications_failed": 1
+      },
+      "items": [
+        {
+          "task_title": "Prepare Q2 Financial Summary",
+          "assignee": "jane.smith",
+          "priority": "High",
+          "notification_status": "sent",
+          "channel": "#finance-team",
+          "timestamp": "2024-06-13T09:22:10Z"
+        },
+        {
+          "task_title": "Update Product Roadmap",
+          "assignee": "tom.lee",
+          "priority": "Medium",
+          "notification_status": "sent",
+          "channel": "#product",
+          "timestamp": "2024-06-13T09:23:05Z"
+        },
+        {
+          "task_title": "Organize Marketing Meeting",
+          "assignee": "emma.thompson",
+          "priority": "High",
+          "notification_status": "sent",
+          "channel": "#marketing",
+          "timestamp": "2024-06-13T09:24:18Z"
+        },
+        {
+          "task_title": "Refresh Website Banner",
+          "assignee": "sara.kim",
+          "priority": "Low",
+          "notification_status": "sent",
+          "channel": "#web-team",
+          "timestamp": "2024-06-13T09:25:02Z"
+        },
+        {
+          "task_title": "Schedule Customer Demos",
+          "assignee": "mike.jordan",
+          "priority": "Medium",
+          "notification_status": "sent",
+          "channel": "#sales",
+          "timestamp": "2024-06-13T09:25:32Z"
+        },
+        {
+          "task_title": "Update Security Policies",
+          "assignee": "lucas.perez",
+          "priority": "High",
+          "notification_status": "sent",
+          "channel": "#it-security",
+          "timestamp": "2024-06-13T09:26:11Z"
+        },
+        {
+          "task_title": "Onboard New Interns",
+          "assignee": "anna.brown",
+          "priority": "Medium",
+          "notification_status": "sent",
+          "channel": "#hr",
+          "timestamp": "2024-06-13T09:27:04Z"
+        },
+        {
+          "task_title": "Compile Audit Documents",
+          "assignee": "victor.wang",
+          "priority": "High",
+          "notification_status": "sent",
+          "channel": "#compliance",
+          "timestamp": "2024-06-13T09:27:40Z"
+        },
+        {
+          "task_title": "Review Partner Contracts",
+          "assignee": "linda.zhao",
+          "priority": "Medium",
+          "notification_status": "failed",
+          "channel": "#legal",
+          "timestamp": "2024-06-13T09:28:35Z"
+        }
+      ]
+    },
+    "metadata": {
+      "agent_name": "Task Delegation Manager",
+      "timestamp": "2024-06-13T09:30:00Z"
+    }
+  }
+}

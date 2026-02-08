@@ -1,0 +1,102 @@
+{
+  "agent_name": "Email Scanner Agent",
+  "agent_id": "698849080410624ae2d63834",
+  "agent_purpose": "Scans Gmail for emails containing delegation keywords and extracts task details including title, description, priority, context, and teammate assignments from @mentions",
+  "description": "Email scanning and task extraction agent that filters delegation emails and structures task data",
+  "response_schema": {
+    "status": "string",
+    "result": {
+      "summary": "string",
+      "data": {
+        "total_emails_scanned": "number",
+        "matching_emails": "number"
+      },
+      "items": [
+        {
+          "title": "string",
+          "description": "string",
+          "priority": "string",
+          "assignee": "string",
+          "context": "string",
+          "sender": "string",
+          "timestamp": "string"
+        }
+      ]
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "summary": "Sample scan completed. 10 emails were checked for delegation keywords; 2 matching emails were found and tasks were extracted.",
+      "data": {
+        "total_emails_scanned": 10,
+        "matching_emails": 2
+      },
+      "items": [
+        {
+          "title": "Urgent: Update Client Presentation",
+          "description": "Hi team, we need to update the client presentation with the latest sales numbers by tomorrow. @sarah please handle the data charts. This is urgent.",
+          "priority": "High",
+          "assignee": "sarah",
+          "context": "Client is expecting updated figures for tomorrow's meeting. Charts must reflect Q2 sales.",
+          "sender": "manager@example.com",
+          "timestamp": "2024-06-12T14:15:01Z"
+        },
+        {
+          "title": "Team: Delegate Feedback Review",
+          "description": "Dear team, please review the customer feedback reports before Friday. @john and @maria, coordinate and delegate tasks as needed.",
+          "priority": "Medium",
+          "assignee": "john, maria",
+          "context": "Customer satisfaction has dropped this month; urgent insights required for management.",
+          "sender": "lead@example.com",
+          "timestamp": "2024-06-11T09:00:32Z"
+        }
+      ]
+    },
+    "metadata": {
+      "agent_name": "Email Scanner Agent",
+      "timestamp": "2024-06-12T16:30:00Z"
+    }
+  },
+  "is_actual_tested": true,
+  "test_timestamp": "2026-02-08T08:28:03.273225",
+  "test_message_used": "Hello, provide a sample response",
+  "actual_test_response": {
+    "status": "success",
+    "result": {
+      "summary": "Sample scan completed. 10 emails were checked for delegation keywords; 2 matching emails were found and tasks were extracted.",
+      "data": {
+        "total_emails_scanned": 10,
+        "matching_emails": 2
+      },
+      "items": [
+        {
+          "title": "Urgent: Update Client Presentation",
+          "description": "Hi team, we need to update the client presentation with the latest sales numbers by tomorrow. @sarah please handle the data charts. This is urgent.",
+          "priority": "High",
+          "assignee": "sarah",
+          "context": "Client is expecting updated figures for tomorrow's meeting. Charts must reflect Q2 sales.",
+          "sender": "manager@example.com",
+          "timestamp": "2024-06-12T14:15:01Z"
+        },
+        {
+          "title": "Team: Delegate Feedback Review",
+          "description": "Dear team, please review the customer feedback reports before Friday. @john and @maria, coordinate and delegate tasks as needed.",
+          "priority": "Medium",
+          "assignee": "john, maria",
+          "context": "Customer satisfaction has dropped this month; urgent insights required for management.",
+          "sender": "lead@example.com",
+          "timestamp": "2024-06-11T09:00:32Z"
+        }
+      ]
+    },
+    "metadata": {
+      "agent_name": "Email Scanner Agent",
+      "timestamp": "2024-06-12T16:30:00Z"
+    }
+  }
+}

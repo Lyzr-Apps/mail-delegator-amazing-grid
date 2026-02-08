@@ -1,0 +1,20 @@
+{
+  "workflow_name": "Task Delegation Hub",
+  "status": "complete",
+  "agents_created": 3,
+  "agent_ids": {
+    "email_scanner_agent": "698849080410624ae2d63834",
+    "slack_notifier_agent": "6988491f4468b1346d15907c",
+    "task_delegation_manager": "69884944b662c978044a15b5"
+  },
+  "manager_agent_id": "69884944b662c978044a15b5",
+  "sub_agent_ids": [
+    "698849080410624ae2d63834",
+    "6988491f4468b1346d15907c"
+  ],
+  "response_schemas": [
+    "response_schemas/email_scanner_agent_response.json",
+    "response_schemas/slack_notifier_agent_response.json",
+    "response_schemas/task_delegation_manager_response.json"
+  ]
+}

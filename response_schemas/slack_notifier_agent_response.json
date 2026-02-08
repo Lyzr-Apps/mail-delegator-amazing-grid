@@ -1,0 +1,43 @@
+{
+  "agent_name": "Slack Notifier Agent",
+  "agent_id": "6988491f4468b1346d15907c",
+  "agent_purpose": "Composes and sends personalized Slack messages to designated teammates with complete task details including title, description, priority level, and background context",
+  "description": "Slack notification agent that sends formatted task delegation messages to team members",
+  "response_schema": {
+    "status": "string (success|error)",
+    "result": {
+      "response": "string",
+      "action_taken": "string (optional)",
+      "data": "object (optional, any structured data)",
+      "suggestions": [
+        "string (optional)"
+      ]
+    },
+    "metadata": {
+      "agent_name": "string",
+      "timestamp": "string (ISO)"
+    }
+  },
+  "example_response": {
+    "status": "success",
+    "result": {
+      "response": "I've completed the task you requested",
+      "action_taken": "Processed the input and generated output",
+      "data": {
+        "key": "value"
+      },
+      "suggestions": [
+        "You might also want to try X"
+      ]
+    },
+    "metadata": {
+      "agent_name": "Slack Notifier Agent",
+      "timestamp": "2025-01-15T10:30:00Z"
+    }
+  },
+  "is_actual_tested": false,
+  "test_timestamp": null,
+  "test_message_used": "Hello, provide a sample response",
+  "raw_test_response": "## Sample Response - Slack Notifier Agent\n\nI've created a sample response that demonstrates how I process and send Slack notifications for task assignments. Here's what the response structure includes:\n\n### **Response Structure**\n\n\u2705 **Status**: `success` - Indicates the overall operation outcome\n\n\ud83d\udcca **Result Summary**: \n- Brief overview of notifications sent\n- **Data metrics**: Total notifications (3), Successful (3), Failed (0)\n\n\ud83d\udc65 **Individual Notification Items**:\nEach notification includes:\n- **Teammate Name**: Who received the notification\n- **Channel**: Slack channel/DM identifier\n- **Task Title**: The specific assignment\n- **Priority Level**: High/Medium/Low with visual indicators\n- **Status**: Sent/Failed confirmation\n- **Timestamp**: ISO format for tracking\n\n### **Sample Message Format** (what teammates would receive):\n\n```\n\ud83d\udc4b Hi Sarah Johnson,\n\n\ud83d\udccb **New Task Assignment: Implement User Authentication Module**\n\n\ud83d\udd34 **Priority: High**\n\n**Description:**\nDevelop and integrate a secure user authentication system with OAuth 2.0 support, including login, logout, password reset, and session management features.\n\n**Background Context:**\nThis is critical for our Q1 product launch. The security team has approved the authentication flow, and the API endpoints are ready for integration.\n\n**Delegated by:** Project Manager - Alex Thompson\n\n\ud83c\udfaf **Action Required:** Please review and acknowledge this task. Feel free to reach out if you need clarification or additional resources.\n```\n\nThis structure ensures complete transparency, tracking, and accountability for all task notifications sent through Slack.",
+  "test_error": "Response not valid JSON: Expecting value: line 1 column 1 (char 0)"
+}
